@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="test.mapper.CarInfoMapper" >
+  <resultMap id="BaseResultMap" type="test.pojo.CarInfo" >
+    <id column="car_id" property="carId" jdbcType="VARCHAR" />
+    <result column="car_name" property="carName" jdbcType="VARCHAR" />
+    <result column="car_color" property="carColor" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from car_info
+    where car_id = #{carId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="test.pojo.CarInfo" >
+    insert into car_info (car_id, car_name, car_color
+      )
+    values (#{carId,jdbcType=VARCHAR}, #{carName,jdbcType=VARCHAR}, #{carColor,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="test.pojo.CarInfo" >
+    update car_info
+    set car_name = #{carName,jdbcType=VARCHAR},
+      car_color = #{carColor,jdbcType=VARCHAR}
+    where car_id = #{carId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select car_id, car_name, car_color
+    from car_info
+    where car_id = #{carId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select car_id, car_name, car_color
+    from car_info
+  </select>
+</mapper>
