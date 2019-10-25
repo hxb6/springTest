@@ -21,12 +21,22 @@ public class User2ServiceImpl implements User2Service {
     @Autowired
     private User2Mapper user2Mapper;
 
+    /**
+     * 事务传播行为为REQUIRED
+     * @param record
+     * @return
+     */
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public int insertOnRequired(User2 record) {
         return user2Mapper.insert(record);
     }
 
+    /**
+     * 事务传播行为为REQUIRED,且抛出异常
+     * @param record
+     * @return
+     */
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public int insertOnRequiredAndException(User2 record) {

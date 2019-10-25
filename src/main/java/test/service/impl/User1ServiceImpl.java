@@ -21,7 +21,11 @@ public class User1ServiceImpl implements User1Service {
     @Autowired
     private User1Mapper user1Mapper;
 
-
+    /**
+     * 事务传播行为为REQUIRED
+     * @param record
+     * @return
+     */
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public int insertOnRequired(User1 record) {
