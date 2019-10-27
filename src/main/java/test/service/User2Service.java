@@ -2,7 +2,6 @@ package test.service;
 
 import test.pojo.User2;
 
-import java.util.List;
 
 /**
  * @Package: test.service
@@ -15,4 +14,12 @@ public interface User2Service {
     int insertOnRequired(User2 record);
 
     int insertOnRequiredAndException(User2 record);
+
+    int insertOnRequires_New(User2 record);
+
+    int insertOnRequires_NewAndException(User2 record);
+
+    int insertOnNested(User2 record);
+
+    int insertOnNestedAndException(User2 record);
 }

@@ -32,4 +32,26 @@ public class User1ServiceImpl implements User1Service {
         return user1Mapper.insert(record);
     }
 
+    /**
+     * 事务传播行为REQUIRES_NEW
+     * @param record
+     * @return
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public int insertOnRequires_New(User1 record) {
+        return user1Mapper.insert(record);
+    }
+
+    /**
+     * 事务传播行为NESTED
+     * @param record
+     * @return
+     */
+    @Override
+    @Transactional(propagation = Propagation.NESTED)
+    public int insertOnNested(User1 record) {
+        return user1Mapper.insert(record);
+    }
+
 }

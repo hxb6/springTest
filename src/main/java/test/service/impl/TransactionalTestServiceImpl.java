@@ -2,6 +2,8 @@ package test.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import test.pojo.User1;
 import test.pojo.User2;
 import test.service.TransactionalTestService;
@@ -23,15 +25,22 @@ public class TransactionalTestServiceImpl implements TransactionalTestService {
     @Autowired
     private User2Service user2Service;
 
+    /**
+     * 验证事务传播行为
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void transactional_propagation_test(){
         User1 user1 = new User1();
-        user1.setName("tom");
-        user1Service.insertOnRequired(user1);
+        user1.setName("张三");
+        user1Service.insertOnNested(user1);
 
         User2 user2 = new User2();
-        user2.setName("jack");
-        user2Service.insertOnRequired(user2);
-
+        user2.setName("李四");
+        try {
+            user2Service.insertOnNestedAndException(user2);
+        } catch (Exception e){
+            System.out.println("try-catch测试");
+        }
     }
 
 }

@@ -44,5 +44,50 @@ public class User2ServiceImpl implements User2Service {
         throw new RuntimeException();
     }
 
+    /**
+     * 事务传播行为REQUIRES_NEW
+     * @param record
+     * @return
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public int insertOnRequires_New(User2 record) {
+        return user2Mapper.insert(record);
+    }
+    /**
+     * 事务传播行为REQUIRES_NEW且抛出异常
+     * @param record
+     * @return
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public int insertOnRequires_NewAndException(User2 record) {
+        user2Mapper.insert(record);
+        throw new RuntimeException();
+    }
+
+    /**
+     * 事务传播行为NESTED
+     * @param record
+     * @return
+     */
+    @Override
+    @Transactional(propagation = Propagation.NESTED)
+    public int insertOnNested(User2 record) {
+        return user2Mapper.insert(record);
+    }
+
+    /**
+     * 事务传播行为NESTED且抛出异常
+     * @param record
+     * @return
+     */
+    @Override
+    @Transactional(propagation = Propagation.NESTED)
+    public int insertOnNestedAndException(User2 record) {
+        user2Mapper.insert(record);
+        throw new RuntimeException();
+    }
+
 
 }

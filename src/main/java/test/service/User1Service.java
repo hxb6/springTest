@@ -13,4 +13,8 @@ public interface User1Service {
 
     int insertOnRequired(User1 record);
 
+    int insertOnRequires_New(User1 record);
+
+    int insertOnNested(User1 record);
+
 }
