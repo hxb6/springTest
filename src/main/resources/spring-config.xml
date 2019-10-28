@@ -40,13 +40,33 @@
         <property name="basePackage" value="test.mapper"/>
     </bean>
 
-    <!-- 开启spring事物支持 -->
-    <tx:annotation-driven transaction-manager="transactionalManager"/>
 
-    <!-- spring + mybatis的事物注解 -->
+    <!-- 配置Spring平台事务管理器{不同持久化框架具体的实现类(实现Spirng的PlatformTransactionManager)不同 下面为mybatis} -->
     <bean id="transactionalManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+
+    <!-- 配置事务的增强 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionalManager">
+        <tx:attributes>
+            <tx:method name="transactionXMLTest" propagation="REQUIRED" />
+        </tx:attributes>
+    </tx:advice>
+    <!-- aop的配置 -->
+    <aop:config>
+        <!-- 配置需要事务管理的方法 -->
+        <aop:pointcut id="pointCut" expression="execution(* test.service.impl.CodeTransactionalTestServiceImpl.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut"/>
+    </aop:config>
+
+    <!-- 开启spring注解事物支持 -->
+    <tx:annotation-driven transaction-manager="transactionalManager"/>
+
+    <!-- 编程式事物 配置事物管理模板 -->
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionalManager"/>
+    </bean>
+
 
     <!-- bean标签没有字标签 构造方法注入,调用类的无参构造方法 -->
     <bean id="helloTest" class="test.HelloTest" scope="prototype"></bean>
