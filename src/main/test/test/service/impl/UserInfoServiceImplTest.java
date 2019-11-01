@@ -1,7 +1,9 @@
 package test.service.impl;
 
+import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import test.mapper.UserInfoMapper;
 import test.pojo.UserInfo;
 import test.service.BaseTest;
 import test.service.UserInfoService;
@@ -23,9 +25,19 @@ public class UserInfoServiceImplTest extends BaseTest {
 
     @Test
     public void selectAll() {
-        List<UserInfo> userInfos = userInfoService.selectAll();
-        for (UserInfo userInfo : userInfos) {
-            System.out.println(userInfo.toString());
-        }
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserInfoMapper mapper = sqlSession.getMapper(UserInfoMapper.class);
+        UserInfo userInfo1 = mapper.selectByPrimaryKey(22);
+
+        UserInfo userInfo2 = mapper.selectByPrimaryKey(22);
+
+        System.out.println(userInfo1 == userInfo2);
+        sqlSession.close();
+    }
+
+    @Test
+    public void select(){
+        userInfoService.selectByPrimaryKey(22);
+        userInfoService.selectByPrimaryKey(22);
     }
 }

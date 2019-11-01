@@ -31,15 +31,14 @@
         <!-- 注入接口对应的sql映射xml文件 -->
         <property name="mapperLocations" value="classpath:mapping/*.xml"/>
         <!-- 注入mybatis配置文件 -->
-       <!-- <property name="configLocation" value="classpath:mybatis-config.xml"/>-->
+       <property name="configLocation" value="classpath:mybatis-config.xml"/>
     </bean>
 
-    <!-- 扫描dao接口所在的包，生成代理实现类 -->
+    <!-- 扫描mapper接口所在的包，生成代理实现类 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
         <property name="basePackage" value="test.mapper"/>
     </bean>
-
 
     <!-- 配置Spring平台事务管理器{不同持久化框架具体的实现类(实现Spirng的PlatformTransactionManager)不同 下面为mybatis} -->
     <bean id="transactionalManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
