@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="test.mapper.PersonMapper" >
+  <resultMap id="BaseResultMap" type="test.pojo.Person" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <collection property="cars" ofType="test.pojo.Car">
+      <id column="car_id" property="carId" jdbcType="VARCHAR" />
+      <result column="car_name" property="carName" jdbcType="VARCHAR" />
+      <result column="par_id" property="parId" jdbcType="INTEGER" />
+    </collection>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from person
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="test.pojo.Person" >
+    insert into person (id, user_name)
+    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="test.pojo.Person" >
+    update person
+    set user_name = #{userName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select p.*,c.*
+    from person p, car c
+    where id = #{id}
+    and id = c.par_id
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, user_name
+    from person
+  </select>
+</mapper>
